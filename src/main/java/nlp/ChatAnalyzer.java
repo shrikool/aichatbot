@@ -28,12 +28,12 @@ import opennlp.tools.util.Span;
 import java.io.*;
 
 /**
- * Created by shrikant
+ * Created by aichatbotteam
  */
 public class ChatAnalyzer {
-    public static void SentenceDetect() throws InvalidFormatException,
+    public static void SentenceDetect(String paragraph) throws InvalidFormatException,
             IOException {
-        String paragraph = "Hi. How are you? This is Mike.";
+        //String paragraph = "Hi. How are you? This is Mike.";
 
         // always start with a model, a model is learned from training data
         InputStream is = new FileInputStream("en-sent.bin");
@@ -47,14 +47,14 @@ public class ChatAnalyzer {
         is.close();
     }
 
-    public static void Tokenize() throws InvalidFormatException, IOException {
+    public static void Tokenize(String paragraph) throws InvalidFormatException, IOException {
         InputStream is = new FileInputStream("en-token.bin");
 
         TokenizerModel model = new TokenizerModel(is);
 
         Tokenizer tokenizer = new TokenizerME(model);
 
-        String tokens[] = tokenizer.tokenize("Hi. How are you? This is Mike.");
+        String tokens[] = tokenizer.tokenize(paragraph);
 
         for (String a : tokens)
             System.out.println(a);
@@ -62,7 +62,7 @@ public class ChatAnalyzer {
         is.close();
     }
 
-    public static void findName() throws IOException {
+    public static void findName(String[] sentence) throws IOException {
         InputStream is = new FileInputStream("en-ner-person.bin");
 
         TokenNameFinderModel model = new TokenNameFinderModel(is);
@@ -70,14 +70,14 @@ public class ChatAnalyzer {
 
         NameFinderME nameFinder = new NameFinderME(model);
 
-        String []sentence = new String[]{
-                "Mike",
-                "Smith",
-                "is",
-                "a",
-                "good",
-                "person"
-        };
+//        String []sentence = new String[]{
+//                "Mike",
+//                "Smith",
+//                "is",
+//                "a",
+//                "good",
+//                "person"
+//        };
 
         Span nameSpans[] = nameFinder.find(sentence);
 
@@ -85,15 +85,15 @@ public class ChatAnalyzer {
             System.out.println(s.toString());
     }
 
-    public static void POSTag() throws IOException {
+    public static void POSTag(String paragraph) throws IOException {
         POSModel model = new POSModelLoader()
                 .load(new File("en-pos-maxent.bin"));
         PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
         POSTaggerME tagger = new POSTaggerME(model);
 
-        String input = "Hi. How are you? This is Mike.";
+//        String paragraph = "Hi. How are you? This is Mike.";
         ObjectStream<String> lineStream = new PlainTextByLineStream(
-                new StringReader(input));
+                new StringReader(paragraph));
 
         perfMon.start();
         String line;
@@ -111,15 +111,15 @@ public class ChatAnalyzer {
         perfMon.stopAndPrintFinalResult();
     }
 
-    public static void chunk() throws IOException {
+    public static void chunk(String paragraph) throws IOException {
         POSModel model = new POSModelLoader()
                 .load(new File("en-pos-maxent.bin"));
         PerformanceMonitor perfMon = new PerformanceMonitor(System.err, "sent");
         POSTaggerME tagger = new POSTaggerME(model);
 
-        String input = "Hi. How are you? This is Mike.";
+//        String paragraph = "Hi. How are you? This is Mike.";
         ObjectStream<String> lineStream = new PlainTextByLineStream(
-                new StringReader(input));
+                new StringReader(paragraph));
 
         perfMon.start();
         String line;
@@ -152,7 +152,7 @@ public class ChatAnalyzer {
             System.out.println(s.toString());
     }
 
-    public static void Parse() throws InvalidFormatException, IOException {
+    public static void Parse(String sentence) throws InvalidFormatException, IOException {
         // http://sourceforge.net/apps/mediawiki/opennlp/index.php?title=Parser#Training_Tool
         InputStream is = new FileInputStream("en-parser-chunking.bin");
 
@@ -160,7 +160,7 @@ public class ChatAnalyzer {
 
         opennlp.tools.parser.Parser parser = ParserFactory.create(model);
 
-        String sentence = "Programcreek is a very huge and useful website.";
+//        String sentence = "Programcreek is a very huge and useful website.";
         Parse topParses[] = ParserTool.parseLine(sentence, parser, 1);
 
         for (Parse p : topParses)
