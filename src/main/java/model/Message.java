@@ -4,6 +4,7 @@ import lombok.Setter;
 import lombok.AllArgsConstructor;
 /**
  * Created by aichatbotteam
+ * 
  */
 @AllArgsConstructor
 public class Message {

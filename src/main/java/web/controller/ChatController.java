@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatController {
     @RequestMapping("/chat")
     public String chat(@RequestParam(value = "msg", defaultValue = "") String msg){
-
-        return "hello";
+        return "hello " + msg;
     }
 }
