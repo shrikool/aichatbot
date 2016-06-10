@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by shrikant
+ * Created by aichatbotteam
  */
 public class mychatbot {
     public static void main(String[] args) throws IOException {
