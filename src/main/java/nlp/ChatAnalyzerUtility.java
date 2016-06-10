@@ -26,12 +26,14 @@ import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by aichatbotteam
  */
-public class ChatAnalyzer {
-    public static void SentenceDetect(String paragraph) throws InvalidFormatException,
+public class ChatAnalyzerUtility {
+    public static String[] SentenceDetect(String paragraph) throws InvalidFormatException,
             IOException {
         //String paragraph = "Hi. How are you? This is Mike.";
 
@@ -42,12 +44,13 @@ public class ChatAnalyzer {
 
         String sentences[] = sdetector.sentDetect(paragraph);
 
-        System.out.println(sentences[0]);
-        System.out.println(sentences[1]);
+//        System.out.println(sentences[0]);
+//        System.out.println(sentences[1]);
         is.close();
+        return sentences;
     }
 
-    public static void Tokenize(String paragraph) throws InvalidFormatException, IOException {
+    public static String[] Tokenize(String paragraph) throws InvalidFormatException, IOException {
         InputStream is = new FileInputStream("en-token.bin");
 
         TokenizerModel model = new TokenizerModel(is);
@@ -56,13 +59,15 @@ public class ChatAnalyzer {
 
         String tokens[] = tokenizer.tokenize(paragraph);
 
-        for (String a : tokens)
-            System.out.println(a);
+//        for (String a : tokens)
+//            System.out.println(a);
 
         is.close();
+        return tokens;
+
     }
 
-    public static void findName(String[] sentence) throws IOException {
+    public static List<String> findName(String[] sentence) throws IOException {
         InputStream is = new FileInputStream("en-ner-person.bin");
 
         TokenNameFinderModel model = new TokenNameFinderModel(is);
@@ -80,9 +85,12 @@ public class ChatAnalyzer {
 //        };
 
         Span nameSpans[] = nameFinder.find(sentence);
+        List<String> names = new ArrayList<>();
 
-        for(Span s: nameSpans)
-            System.out.println(s.toString());
+        for(Span span: nameSpans)
+            names.add(span.toString());
+
+        return names;
     }
 
     public static void POSTag(String paragraph) throws IOException {

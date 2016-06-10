@@ -1,7 +1,7 @@
 package solr;
 
 /**
- * Created by shrikant
+ * Created by aichatbotteam
  */
 public class Communicator {
 }
